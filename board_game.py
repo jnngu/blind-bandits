@@ -83,9 +83,9 @@ class Board:
         elif self.grid[y-1][x] == "F":
           self.soundlist += [(player.playerNumber, "win")]
         else:
-          self.soundlist += [(player.playerNumber, "bump")])]
+          self.soundlist += [(player.playerNumber, "bump")]
       else:
-        self.soundlist += [(player.playerNumber, "bump")])]
+        self.soundlist += [(player.playerNumber, "bump")]
         
   def moveSouth(self, player):
       print("move", player)
@@ -98,9 +98,9 @@ class Board:
         elif self.grid[y+1][x] == "F":
           self.soundlist += [(player.playerNumber, "win")]
         else:
-          self.soundlist += [(player.playerNumber, "bump")])]
+          self.soundlist += [(player.playerNumber, "bump")]
       else:
-        self.soundlist += [(player.playerNumber, "bump")])]
+        self.soundlist += [(player.playerNumber, "bump")]
 
   def moveWest(self, player):
       print("move", player)
@@ -113,9 +113,9 @@ class Board:
         elif self.grid[y][x-1] == "F":
           self.soundlist += [(player.playerNumber, "win")]
         else:
-          self.soundlist += [(player.playerNumber, "bump")])]
+          self.soundlist += [(player.playerNumber, "bump")]
       else:
-        self.soundlist += [(player.playerNumber, "bump")])]  
+        self.soundlist += [(player.playerNumber, "bump")]  
 
   def moveEast(self, player):
     print("move", player)
@@ -128,9 +128,9 @@ class Board:
       elif self.grid[y][x+1] == "F":
         self.soundlist += [(player.playerNumber, "win")]
       else:
-        self.soundlist += [(player.playerNumber, "bump")])]
+        self.soundlist += [(player.playerNumber, "bump")]
     else:
-      self.soundlist += [(player.playerNumber, "bump")])]    
+      self.soundlist += [(player.playerNumber, "bump")]    
 
   def fireNorth(self, player): 
     x,y = player.coord
@@ -203,7 +203,7 @@ class Board:
           break
         elif self.grid[ycoord][x] == "Player":
           soundPlayed = True
-         self.soundlist += [(player.playerNumber, "player")]
+          self.soundlist += [(player.playerNumber, "player")]
           break
     if not soundPlayed:
       self.soundlist += [(player.playerNumber, "empty")]
@@ -225,7 +225,7 @@ class Board:
           break
         elif self.grid[ycoord][x] == "Player":
           soundPlayed = True
-         self.soundlist += [(player.playerNumber, "player")]
+          self.soundlist += [(player.playerNumber, "player")]
           break
     if not soundPlayed:
       self.soundlist += [(player.playerNumber, "empty")]
@@ -247,7 +247,7 @@ class Board:
             break
           elif self.grid[y][xcoord] == "Player":
             soundPlayed = True
-           self.soundlist += [(player.playerNumber, "player")]
+            self.soundlist += [(player.playerNumber, "player")]
             break
       if not soundPlayed:
         self.soundlist += [(player.playerNumber, "empty")]
@@ -268,7 +268,7 @@ class Board:
           break
         elif self.grid[y][xcoord] == "Player":
           soundPlayed = True
-         self.soundlist += [(player.playerNumber, "player")]
+          self.soundlist += [(player.playerNumber, "player")]
           break
     if not soundPlayed:
       self.soundlist += [(player.playerNumber, "empty")]
