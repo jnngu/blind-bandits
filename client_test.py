@@ -2,6 +2,7 @@ import socket
 import time
 #import threaded_voice_recognition as tvr
 import speech_recognition as sr
+import sounds
 
 output_list = []
 
@@ -47,11 +48,14 @@ try:
                 print("reached", decodedmsglist[2], int(decodedmsglist[2]))
                 player_num = int(decodedmsglist[2])
                 s.send(bytes("Player {} has Connected".format(player_num), 'utf-8'))
+            if (len(decodedmsglist) != 0 and int(decodedmsglist[0]) == player_num and decodedmsglist[1] == "sound"):
+              sounds.playSound(decodedmsglist[2])
         except:
             pass
         
         for output in output_list:
-            s.send(bytes(output, 'utf-8'))
+            command = str(plauer_num) + " " + output
+            s.send(bytes(command, 'utf-8'))
             print("sending")
             output_list.remove(output)
         

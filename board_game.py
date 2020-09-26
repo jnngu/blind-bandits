@@ -7,6 +7,7 @@ class Board:
     self.height = 6
     self.numplayers = 0
     self.killedplayers = 0
+    self.soundList = []
 
   def __str__(self):
     return('\n'.join([' '.join(['{:4}'.format(str(self.grid[j][i])) for i in range(self.width)]) for j in range (self.height)]))
@@ -80,11 +81,11 @@ class Board:
           self.grid[y][x] = 0
           player.set_coord(x,y-1)
         elif self.grid[y-1][x] == "F":
-          print("TODO: end game")
+          self.soundlist += [(player.playerNumber, "win")]
         else:
-          print("TODO: play bump sound for client")
+          self.soundlist += [(player.playerNumber, "bump")])]
       else:
-        print("TODO: play bump sound for client")
+        self.soundlist += [(player.playerNumber, "bump")])]
         
   def moveSouth(self, player):
       print("move", player)
@@ -95,11 +96,11 @@ class Board:
           self.grid[y][x] = 0
           player.set_coord(x,y+1)
         elif self.grid[y+1][x] == "F":
-          print("TODO: end game")
+          self.soundlist += [(player.playerNumber, "win")]
         else:
-          print("TODO: play bump sound for client")
+          self.soundlist += [(player.playerNumber, "bump")])]
       else:
-        print("TODO: play bump sound for client")
+        self.soundlist += [(player.playerNumber, "bump")])]
 
   def moveWest(self, player):
       print("move", player)
@@ -110,11 +111,11 @@ class Board:
           self.grid[y][x] = 0
           player.set_coord(x-1,y)
         elif self.grid[y][x-1] == "F":
-          print("TODO: end game")
+          self.soundlist += [(player.playerNumber, "win")]
         else:
-          print("TODO: play bump sound for client")
+          self.soundlist += [(player.playerNumber, "bump")])]
       else:
-        print("TODO: play bump sound for client")  
+        self.soundlist += [(player.playerNumber, "bump")])]  
 
   def moveEast(self, player):
     print("move", player)
@@ -125,11 +126,11 @@ class Board:
         self.grid[y][x] = 0
         player.set_coord(x+1,y)
       elif self.grid[y][x+1] == "F":
-        print("TODO: end game")
+        self.soundlist += [(player.playerNumber, "win")]
       else:
-        print("TODO: play bump sound for client")
+        self.soundlist += [(player.playerNumber, "bump")])]
     else:
-      print("TODO: play bump sound for client")    
+      self.soundlist += [(player.playerNumber, "bump")])]    
 
   def fireNorth(self, player): 
     x,y = player.coord
@@ -140,8 +141,8 @@ class Board:
         if self.grid[ycoord][x] == "X" or self.grid[ycoord][x] == "F":
           break
         elif self.grid[ycoord][x] == "Player":
-          print(self.grid[ycoord][x])
-          print("TODO: killed players, give point to killer")
+          killedPlayer = self.grid[ycoord][x]
+          self.soundlist += [(killedPlayer.playerNumber, "death")]
           self.killedplayers += 1
           self.grid[ycoord][x] = 0 
     
@@ -153,7 +154,8 @@ class Board:
         if self.grid[ycoord][x] == "X" or self.grid[ycoord][x] == "F":
           break
         elif self.grid[ycoord][x] == "Player":
-          print("TODO: killed players, give point to killer")
+          killedPlayer = self.grid[ycoord][x]
+          self.soundlist += [(killedPlayer.playerNumber, "death")]
           self.killedplayers += 1
           self.grid[ycoord][x] = 0 
   
@@ -166,7 +168,8 @@ class Board:
         if self.grid[y][xcoord] == "X" or self.grid[y][xcoord] == "F":
           break
         elif self.grid[y][xcoord] == "Player":
-          print("TODO: killed players, give point to killer")
+          killedPlayer = self.grid[y][xcoord]
+          self.soundlist += [(killedPlayer.playerNumber, "death")]
           self.killedplayers += 1
           self.grid[y][xcoord] = 0 
     
@@ -178,7 +181,8 @@ class Board:
         if self.grid[y][xcoord] == "X" or self.grid[y][xcoord] == "F":
           break
         elif self.grid[y][xcoord] == "Player":
-          print("TODO: killed players, give point to killer")
+          killedPlayer = self.grid[y][xcoord]
+          self.soundlist += [(killedPlayer.playerNumber, "death")]
           self.killedplayers += 1
           self.grid[y][xcoord] = 0 
 
@@ -191,18 +195,18 @@ class Board:
         #print(x, ycoord)
         if self.grid[ycoord][x] == "X":
           soundPlayed = True
-          print("play obstacle echo sound")
+          self.soundlist += [(player.playerNumber, "obs")]
           break
         elif self.grid[ycoord][x] == "F":
           soundPlayed = True
-          print("play flag echo sound")
+          self.soundlist += [(player.playerNumber, "flag")]
           break
         elif self.grid[ycoord][x] == "Player":
           soundPlayed = True
-          print("play player echo sound")
+         self.soundlist += [(player.playerNumber, "player")]
           break
     if not soundPlayed:
-      print("play empty row echo sound")
+      self.soundlist += [(player.playerNumber, "empty")]
 
 
   def echoSouth(self, player): 
@@ -213,18 +217,18 @@ class Board:
         #print(x, ycoord)
         if self.grid[ycoord][x] == "X":
           soundPlayed = True
-          print("play obstacle echo sound")
+          self.soundlist += [(player.playerNumber, "obs")]
           break
         elif self.grid[ycoord][x] == "F":
           soundPlayed = True
-          print("play flag echo sound")
+          self.soundlist += [(player.playerNumber, "flag")]
           break
         elif self.grid[ycoord][x] == "Player":
           soundPlayed = True
-          print("play player echo sound")
+         self.soundlist += [(player.playerNumber, "player")]
           break
     if not soundPlayed:
-      print("play empty row echo sound")
+      self.soundlist += [(player.playerNumber, "empty")]
 
 
   def echoWest(self, player): 
@@ -235,18 +239,18 @@ class Board:
           #print(x, ycoord)
           if self.grid[y][xcoord] == "X":
             soundPlayed = True
-            print("play obstacle echo sound")
+            self.soundlist += [(player.playerNumber, "obs")]
             break
           elif self.grid[y][xcoord] == "F":
             soundPlayed = True
-            print("play flag echo sound")
+            self.soundlist += [(player.playerNumber, "flag")]
             break
           elif self.grid[y][xcoord] == "Player":
             soundPlayed = True
-            print("play player echo sound")
+           self.soundlist += [(player.playerNumber, "player")]
             break
       if not soundPlayed:
-        print("play empty row echo sound")
+        self.soundlist += [(player.playerNumber, "empty")]
 
   def echoEast(self, player): 
     x,y = player.coord
@@ -256,18 +260,18 @@ class Board:
         #print(x, ycoord)
         if self.grid[y][xcoord] == "X":
           soundPlayed = True
-          print("play obstacle echo sound")
+          self.soundlist += [(player.playerNumber, "obs")]
           break
         elif self.grid[y][xcoord] == "F":
           soundPlayed = True
-          print("play flag echo sound")
+          self.soundlist += [(player.playerNumber, "flag")]
           break
         elif self.grid[y][xcoord] == "Player":
           soundPlayed = True
-          print("play player echo sound")
+         self.soundlist += [(player.playerNumber, "player")]
           break
     if not soundPlayed:
-      print("play empty row echo sound")
+      self.soundlist += [(player.playerNumber, "empty")]
   
 class Player:
   def __init__(self, playernum):
