@@ -9,15 +9,18 @@ port = 5959
 addr = (serv, 5959)
 s.bind(addr)
 
-
+player_count = 1
 
 def handle_client(conn, addr):
     print(f"New Connection ----> {addr} connected")
     
     connected = True
+    conn.send(bytes("YeeeHAw I'm The Blind Bandit and I'm gonna eat you","utf-8"))
     while connected:
-        conn.send(bytes("YeeeHAw I'm The Blind Bandit and I'm gonna eat you","utf-8"))
         msg = conn.recv(1024).decode("utf-8")
+        if msg == "Client Connected":
+            conn.send(bytes("Set Player {}".format(player_count)))
+            player_count += 1
         print(msg)
         
     
