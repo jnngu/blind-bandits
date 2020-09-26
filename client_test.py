@@ -41,17 +41,21 @@ try:
         try:
             msg = s.recv(1024)
             decodedmsglist = msg.decode("utf-8").split()
-            if len(decodedmsglist) == 3 and decodedmsglist[0] == "Set" and decodedmsglist[1] == "Player":
-                player_num = int(decodedmsg[2])
             print(msg.decode("utf-8"))
+            print(decodedmsglist, player_num == None, len(decodedmsglist) == 3, decodedmsglist[0] == "Set",  decodedmsglist[1] == "Player")
+            if player_num == None and decodedmsglist[0] == "Set":
+                print("reached", decodedmsglist[2], int(decodedmsglist[2]))
+                player_num = int(decodedmsglist[2])
+                s.send(bytes("Player {} has Connected".format(player_num), 'utf-8'))
         except:
             pass
         
         for output in output_list:
             s.send(bytes(output, 'utf-8'))
+            print("sending")
             output_list.remove(output)
         
-        print("x")
+        print(player_num)
         time.sleep(1)
 except KeyboardInterrupt:
     pass
