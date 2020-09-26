@@ -1,51 +1,28 @@
-#import the socket module
-
 import socket
+import time
+#import threaded_voice_recognition as tvr
+#import speech_recognition as sr
 
- 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(("172.26.35.145", 5959))
+s.setblocking(0)
 
-#Create a socket instance
+#r = sr.Recognizer()
+#m = sr.Microphone()
+#r.dynamic_energy_threshold = False #Helps increase speed but lowers accuracy
+#with m as source: r.adjust_for_ambient_noise(source)      #ambient noise check bad and slow and bad
+#stop_listening = r.listen_in_background(m, tvr.callback)
+s.send(bytes("I did a thing!", "utf-8"))
+while True:
+    try:
+        msg = s.recv(1024)
+        print(msg.decode("utf-8"))
+    except:
+        pass
 
-socketObject = socket.socket()
+    
+    print("x")
+    time.sleep(1)
 
- 
 
-#Using the socket connect to a server...in this case localhost
-
-socketObject.connect(("128.237.82.1", 35491))
-
-print("Connected to localhost")
-
- 
-
-# Send a message to the web server to supply a page as given by Host param of GET request
-
-HTTPMessage = "GET / HTTP/1.1\r\nHost: localhost\r\n Connection: close\r\n\r\n"
-
-bytes       = str.encode(HTTPMessage)
-
- 
-
-socketObject.sendall(bytes)
-
- 
-
-# Receive the data
-
-while(True):
-
-    data = socketObject.recv(1024)
-
-    print(data)
-
- 
-
-    if(data==b''):
-
-        print("Connection closed")
-
-        break
-
- 
-
-socketObject.close()
+#stop_listening()
