@@ -11,15 +11,16 @@ addr = (serv, 5959)
 s.bind(addr)
 
 player_count = 1
-gameBoard = bg.Board()
+gameboard = bg.Board()
 playerList = [0]
 
-actionDict = {"move north":lamda p: gameboard.moveNorth(x), "move south":lamda p: gameboard.moveSouth(x), "move east": lamda p: gameboard.moveEast(x), "move west": lamda p: gameboard.moveWest(x), "fire north":lamda p: gameboard.fireNorth(x), "fire south":lamda p: gameboard.fireSouth(x), "fire east": lamda p: gameboard.fireEast(x), "fire west": lamda p: gameboard.fireWest(x), "echo north":lamda p: gameboard.echoNorth(x), "echo south":lamda p: gameboard.echoSouth(x), "echo east": lamda p: gameboard.echoEast(x), "echo west": lamda p: gameboard.echoWest(x)}
+actionDict = {"move north": lambda x: gameboard.moveNorth(x),"move south":lambda p: gameboard.moveSouth(p), "move east": lambda p: gameboard.moveEast(p), "move west": lambda p: gameboard.moveWest(p), "fire north":lambda p: gameboard.fireNorth(p), "fire south":lambda p: gameboard.fireSouth(p), "fire east": lambda p: gameboard.fireEast(p), "fire west": lambda p: gameboard.fireWest(p), "echo north":lambda p: gameboard.echoNorth(p), "echo south":lambda p: gameboard.echoSouth(p), "echo east": lambda p: gameboard.echoEast(p), "echo west": lambda p: gameboard.echoWest(p)}
+
 
 def handle_client(conn, addr):
     print(f"New Connection ----> {addr} connected")
     global playerList
-    global gameBoard
+    global gameboard
     connected = True
     conn.send(bytes("YeeeHAw I'm The Blind Bandit and I'm gonna eat you","utf-8"))
     playerNum = None
@@ -38,7 +39,7 @@ def handle_client(conn, addr):
             actionDict[msg[2:0]](playerList[1])
         
         if len(bg.soundList) != 0:
-          num, snd = bg.soundList[0]
+          num, snd = gameboard.soundList[0]
           if num == playerNum:
             msg = str(playernum) + " " + snd
             conn.send(bytes(msg, "utf-8"))
@@ -63,13 +64,6 @@ def start():
 print ("Server Starting.......")
 start()
     
-
-
-
-
-
-
-
 
 #2 players 
 s.listen(2) 
